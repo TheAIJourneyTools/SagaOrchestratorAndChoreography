@@ -1,36 +1,43 @@
-# Saga Orchestrator and Choreography Example (Go)
+# Saga Pattern Examples in Go
 
-This project demonstrates the Saga pattern using the **Orchestrator** approach in Go.  
-It simulates a distributed transaction across payment, inventory, and shipping services, with compensation logic for failures.
+This repository demonstrates the Saga pattern for managing distributed transactions in microservices, using both the **Orchestrator** and **Choreography** approaches.
 
-## Structure
+## What is the Saga Pattern?
 
-- `orchestrator/main.go` - Entry point, runs the saga.
-- `orchestrator/saga.go` - Saga orchestration logic.
-- `orchestrator/services.go` - Simulated service actions and compensations.
+The Saga pattern manages data consistency across multiple services by breaking a transaction into a series of smaller, isolated steps (local transactions), each with a corresponding compensating action to undo its effect if needed.
 
-## How It Works
+There are two main approaches:
 
-The orchestrator runs three steps in order:
+- **Orchestrator-based Saga**: A central coordinator (orchestrator) tells each service what to do and when to execute compensating actions.
+- **Choreography-based Saga**: Each service produces and listens to events, coordinating the saga without a central controller.
 
-1. Reserve Payment
-2. Reserve Inventory
-3. Ship Order
+## Project Structure
 
-If any step fails, previously completed steps are compensated in reverse order.
+- [`orchestrator/`](./orchestrator/) — Implements the Orchestrator-based Saga pattern.
+- [`go-choreography/`](./go-choreography/) — Implements the Choreography-based Saga pattern.
 
-## Running the Example
+Each subdirectory contains its own README with details and instructions.
 
-Open a terminal and navigate to the `orchestrator` directory:
+## How to Run
 
-```sh
-cd orchestrator
-go run .
-```
+1. Choose the pattern you want to explore:
 
-You should see output for both a successful and a failed saga run.
+   - For Orchestrator:
+     ```
+     cd orchestrator
+     go run .
+     ```
+   - For Choreography:
+     ```
+     cd go-choreography
+     go run .
+     ```
 
-## Notes
+2. See the respective subdirectory README for more information and sample output.
 
-- All files must be in the same directory and use `package main`.
-- No external dependencies are required.
+## References
+
+- [Saga Pattern on microservices.io](https://microservices.io/patterns/data/saga.html)
+- [Saga Pattern - Microsoft Docs](https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/saga/saga)
+
+---
